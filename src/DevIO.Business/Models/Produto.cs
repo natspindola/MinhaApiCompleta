@@ -30,7 +30,7 @@ namespace DevIO.Business.Models
         [ScaffoldColumn(false)]
         public DateTime DataCadastro { get; set; }
 
-        public string Ativo { get; set; }
+        public bool Ativo { get; set; }
 
         /* EF Relation */
         public Fornecedor Fornecedor { get; set; }
