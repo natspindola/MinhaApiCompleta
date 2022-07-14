@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevIO.Data.Migrations
 {
     [DbContext(typeof(MeuDbContext))]
-    [Migration("20220616182727_Initial")]
-    partial class Initial
+    [Migration("20220714215959_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,25 +21,22 @@ namespace DevIO.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AppMvcBasica.Models.Endereco", b =>
+            modelBuilder.Entity("DevIO.Business.Models.Endereco", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Bairro")
                         .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasMaxLength(200);
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Cep")
                         .IsRequired()
-                        .HasColumnType("varchar(8)")
-                        .HasMaxLength(8);
+                        .HasColumnType("varchar(8)");
 
                     b.Property<string>("Cidade")
                         .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasMaxLength(200);
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Complemento")
                         .IsRequired()
@@ -47,20 +44,17 @@ namespace DevIO.Data.Migrations
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("varchar(50)");
 
                     b.Property<Guid>("FornecedorId");
 
                     b.Property<string>("Logradouro")
                         .IsRequired()
-                        .HasColumnType("varchar(200)")
-                        .HasMaxLength(200);
+                        .HasColumnType("varchar(200)");
 
                     b.Property<string>("Numero")
                         .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(200);
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
@@ -70,7 +64,7 @@ namespace DevIO.Data.Migrations
                     b.ToTable("Enderecos");
                 });
 
-            modelBuilder.Entity("AppMvcBasica.Models.Fornecedor", b =>
+            modelBuilder.Entity("DevIO.Business.Models.Fornecedor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -79,13 +73,11 @@ namespace DevIO.Data.Migrations
 
                     b.Property<string>("Documento")
                         .IsRequired()
-                        .HasColumnType("varchar(14)")
-                        .HasMaxLength(14);
+                        .HasColumnType("varchar(14)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(200)")
-                        .HasMaxLength(200);
+                        .HasColumnType("varchar(200)");
 
                     b.Property<int>("TipoFornecedor");
 
@@ -94,62 +86,48 @@ namespace DevIO.Data.Migrations
                     b.ToTable("Fornecedores");
                 });
 
-            modelBuilder.Entity("AppMvcBasica.Models.Produto", b =>
+            modelBuilder.Entity("DevIO.Business.Models.Produto", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Ativo")
-                        .HasColumnType("varchar(100)");
+                    b.Property<bool>("Ativo");
 
                     b.Property<DateTime>("DataCadastro");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("varchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<Guid?>("EnderecoId");
+                        .HasColumnType("varchar(1000)");
 
                     b.Property<Guid>("FornecedorId");
 
                     b.Property<string>("Imagem")
                         .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasMaxLength(200);
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(200)")
-                        .HasMaxLength(200);
+                        .HasColumnType("varchar(200)");
 
-                    b.Property<string>("Valor")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
+                    b.Property<decimal>("Valor");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EnderecoId");
 
                     b.HasIndex("FornecedorId");
 
                     b.ToTable("Produtos");
                 });
 
-            modelBuilder.Entity("AppMvcBasica.Models.Endereco", b =>
+            modelBuilder.Entity("DevIO.Business.Models.Endereco", b =>
                 {
-                    b.HasOne("AppMvcBasica.Models.Fornecedor", "Fornecedor")
+                    b.HasOne("DevIO.Business.Models.Fornecedor", "Fornecedor")
                         .WithOne("Endereco")
-                        .HasForeignKey("AppMvcBasica.Models.Endereco", "FornecedorId");
+                        .HasForeignKey("DevIO.Business.Models.Endereco", "FornecedorId");
                 });
 
-            modelBuilder.Entity("AppMvcBasica.Models.Produto", b =>
+            modelBuilder.Entity("DevIO.Business.Models.Produto", b =>
                 {
-                    b.HasOne("AppMvcBasica.Models.Endereco")
-                        .WithMany("Produtos")
-                        .HasForeignKey("EnderecoId");
-
-                    b.HasOne("AppMvcBasica.Models.Fornecedor", "Fornecedor")
+                    b.HasOne("DevIO.Business.Models.Fornecedor", "Fornecedor")
                         .WithMany("Produtos")
                         .HasForeignKey("FornecedorId");
                 });

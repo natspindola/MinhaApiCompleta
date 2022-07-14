@@ -26,7 +26,7 @@ namespace DevIO.Api
         {
             services.AddDbContext<MeuDbContext>(optionsAction: options =>
              {
-                 options.UseSqlServer(Configuration.GetConnectionString(name: "Default"));
+                 options.UseSqlServer(Configuration.GetConnectionString(name: "DefaultConnection"));
              });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

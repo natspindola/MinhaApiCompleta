@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DevIO.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,8 @@ namespace DevIO.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Nome = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    Documento = table.Column<string>(type: "varchar(14)", maxLength: 14, nullable: false),
+                    Nome = table.Column<string>(type: "varchar(200)", nullable: false),
+                    Documento = table.Column<string>(type: "varchar(14)", nullable: false),
                     TipoFornecedor = table.Column<int>(nullable: false),
                     Ativo = table.Column<bool>(nullable: false)
                 },
@@ -28,13 +28,13 @@ namespace DevIO.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     FornecedorId = table.Column<Guid>(nullable: false),
-                    Logradouro = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    Numero = table.Column<string>(type: "varchar(50)", maxLength: 200, nullable: false),
+                    Logradouro = table.Column<string>(type: "varchar(200)", nullable: false),
+                    Numero = table.Column<string>(type: "varchar(50)", nullable: false),
                     Complemento = table.Column<string>(type: "varchar(250)", nullable: false),
-                    Cep = table.Column<string>(type: "varchar(8)", maxLength: 8, nullable: false),
-                    Bairro = table.Column<string>(type: "varchar(100)", maxLength: 200, nullable: false),
-                    Cidade = table.Column<string>(type: "varchar(100)", maxLength: 200, nullable: false),
-                    Estado = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    Cep = table.Column<string>(type: "varchar(8)", nullable: false),
+                    Bairro = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Cidade = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Estado = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,23 +53,16 @@ namespace DevIO.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     FornecedorId = table.Column<Guid>(nullable: false),
-                    Nome = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    Descricao = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false),
-                    Imagem = table.Column<string>(type: "varchar(100)", maxLength: 200, nullable: false),
-                    Valor = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Nome = table.Column<string>(type: "varchar(200)", nullable: false),
+                    Descricao = table.Column<string>(type: "varchar(1000)", nullable: false),
+                    Imagem = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Valor = table.Column<decimal>(nullable: false),
                     DataCadastro = table.Column<DateTime>(nullable: false),
-                    Ativo = table.Column<string>(type: "varchar(100)", nullable: true),
-                    EnderecoId = table.Column<Guid>(nullable: true)
+                    Ativo = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Produtos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Produtos_Enderecos_EnderecoId",
-                        column: x => x.EnderecoId,
-                        principalTable: "Enderecos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Produtos_Fornecedores_FornecedorId",
                         column: x => x.FornecedorId,
@@ -85,11 +78,6 @@ namespace DevIO.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Produtos_EnderecoId",
-                table: "Produtos",
-                column: "EnderecoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Produtos_FornecedorId",
                 table: "Produtos",
                 column: "FornecedorId");
@@ -98,10 +86,10 @@ namespace DevIO.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Produtos");
+                name: "Enderecos");
 
             migrationBuilder.DropTable(
-                name: "Enderecos");
+                name: "Produtos");
 
             migrationBuilder.DropTable(
                 name: "Fornecedores");
