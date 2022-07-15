@@ -66,7 +66,22 @@ namespace DevIO.Api.Controllers
             return Ok(fornecedor);
         }
 
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult<FornecedorViewModel>> Excluir(Guid id)
+        {
+            var fornecedor = await ObterFornecedorEndereco(id);
+
+            if (fornecedor == null) return NotFound();
+
+            await _fornecedorService.Remover(id);
+        }
+
         public async Task<FornecedorViewModel> ObterFornecedorProdutosEndereco(Guid id)
+        {
+            return _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorProdutosEndereco(id));
+        }
+
+        public async Task<FornecedorViewModel> ObterFornecedorEndereco(Guid id)
         {
             return _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorProdutosEndereco(id));
         }
