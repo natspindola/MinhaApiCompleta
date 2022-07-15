@@ -48,9 +48,11 @@ namespace DevIO.Api.Controllers
             if (!ModelState.IsValid) return BadRequest();
 
             var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
-            await _fornecedorService.Adicionar(fornecedor);
+            var result = await _fornecedorService.Adicionar(fornecedor);
 
-            return Ok();
+            if (!result) return BadRequest();
+
+            return Ok(fornecedor);
         }
 
         [HttpPut]
@@ -61,7 +63,9 @@ namespace DevIO.Api.Controllers
             if (!ModelState.IsValid) return BadRequest();
 
             var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
-            await _fornecedorService.Atualizar(fornecedor);
+            var result = await _fornecedorService.Atualizar(fornecedor);
+
+            if (!result) return BadRequest();
 
             return Ok(fornecedor);
         }
@@ -73,7 +77,11 @@ namespace DevIO.Api.Controllers
 
             if (fornecedor == null) return NotFound();
 
-            await _fornecedorService.Remover(id);
+            var result = await _fornecedorService.Remover(id);
+
+            if (!result) return BadRequest();
+
+            return Ok(fornecedor);
         }
 
         public async Task<FornecedorViewModel> ObterFornecedorProdutosEndereco(Guid id)
