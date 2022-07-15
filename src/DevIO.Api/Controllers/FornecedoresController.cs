@@ -53,6 +53,19 @@ namespace DevIO.Api.Controllers
             return Ok();
         }
 
+        [HttpPut]
+        public async Task<ActionResult<FornecedorViewModel>> Atualizar(Guid id, FornecedorViewModel fornecedorViewModel)
+        {
+            if (id != fornecedorViewModel.Id) return BadRequest();
+
+            if (!ModelState.IsValid) return BadRequest();
+
+            var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
+            await _fornecedorService.Atualizar(fornecedor);
+
+            return Ok(fornecedor);
+        }
+
         public async Task<FornecedorViewModel> ObterFornecedorProdutosEndereco(Guid id)
         {
             return _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorProdutosEndereco(id));
