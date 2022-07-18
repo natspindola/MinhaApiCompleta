@@ -45,7 +45,7 @@ namespace DevIO.Business.Services
                 return false;
             }
 
-            await _fornecedorRepository.Adicionar(fornecedor);
+            await _fornecedorRepository.Atualizar(fornecedor);
             return true;
         }
 

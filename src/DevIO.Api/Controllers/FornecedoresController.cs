@@ -22,6 +22,7 @@ namespace DevIO.Api.Controllers
                                       IMapper mapper)
         {
             _fornecedorRepository = fornecedorRepository;
+            _fornecedorService = fornecedorService;
             _mapper = mapper;
         }
 
@@ -55,7 +56,7 @@ namespace DevIO.Api.Controllers
             return Ok(fornecedor);
         }
 
-        [HttpPut]
+        [HttpPut("{id:guid}")]
         public async Task<ActionResult<FornecedorViewModel>> Atualizar(Guid id, FornecedorViewModel fornecedorViewModel)
         {
             if (id != fornecedorViewModel.Id) return BadRequest();
