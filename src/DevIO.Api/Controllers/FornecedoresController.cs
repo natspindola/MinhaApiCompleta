@@ -88,19 +88,21 @@ namespace DevIO.Api.Controllers
         [HttpGet("obter-endereco/{id:guid}")]
         public async Task<EnderecoViewModel> ObterEnderecoPorId(Guid id)
         {
-            var enderecoViewModel = _mapper.Map<EnderecoViewModel>(await _enderecoRepository.ObterPorId(id));
-            return enderecoViewModel;
+            return _mapper.Map<EnderecoViewModel>(await _enderecoRepository.ObterPorId(id));
         }
 
         [HttpPut("atualizar-endereco/{id:guid}")]
         public async Task<IActionResult> AtualizarEndereco(Guid id, EnderecoViewModel enderecoViewModel)
         {
-            if (id != enderecoViewModel.Id) return BadRequest();
+            if (id != enderecoViewModel.Id)
+            {
+                NotificarErro(mensagem: "O id informado está incorreto");
+                return CustomResponse(enderecoViewModel);
+            }
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var endereco = _mapper.Map<Endereco>(enderecoViewModel);
-            await _fornecedorService.AtualizarEndereco(endereco);
+            await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco>(enderecoViewModel));
 
             return CustomResponse(enderecoViewModel);
         }
