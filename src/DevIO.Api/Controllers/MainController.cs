@@ -18,9 +18,33 @@ namespace DevIO.Api.Controllers
             _notificador = notificador;
         }
 
+        protected bool OperacaoValida()
+        {
+            return !_notificador.TemNotificacao();
+        }
+
+        protected ActionResult CustomResponse(object result = null)
+        {
+            if (OperacaoValida())
+            {
+                return Ok(value: new
+                {
+                    sucess = true,
+                    data = result
+                });
+            }
+
+            return BadRequest(error: new
+            {
+                sucess = false,
+                errors = _notificador.ObterNotificacoes().Select(n => n.Mensagem)
+            });
+        }
+
         protected ActionResult CustomResponse(ModelStateDictionary modelState)
         {
-
+            if (!modelState.IsValid) NotificarErroModelInvalida(modelState);
+            return CustomResponse();
         }
 
         protected void NotificarErroModelInvalida(ModelStateDictionary modelState)
