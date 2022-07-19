@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DevIO.Api.ViewModels;
 using DevIO.Business.Interfaces;
+using DevIO.Business.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,16 @@ namespace DevIO.Api.Controllers
             if (produtoViewModel == null) return NotFound();
 
             return produtoViewModel;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<FornecedorViewModel>> Adicionar(ProdutoViewModel produtoViewModel)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            await _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel));
+
+            return CustomResponse(produtoViewModel);
         }
 
 
