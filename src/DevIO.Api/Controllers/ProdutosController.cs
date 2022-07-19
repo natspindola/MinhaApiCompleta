@@ -43,7 +43,17 @@ namespace DevIO.Api.Controllers
         }
 
 
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult<ProdutoViewModel>> Excluir(Guid id)
+        {
+            var produto = await ObterProduto(id);
 
+            if (produto == null) return NotFound();
+
+            await _produtoService.Remover(id);
+
+            return CustomResponse(produto);
+        }
 
         private async Task<ProdutoViewModel> ObterProduto(Guid id)
         {
