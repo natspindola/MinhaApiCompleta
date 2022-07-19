@@ -29,6 +29,8 @@ namespace DevIO.Api
                  options.UseSqlServer(Configuration.GetConnectionString(name: "DefaultConnection"));
              });
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.Configure<ApiBehaviorOptions>(options =>
@@ -44,8 +46,6 @@ namespace DevIO.Api
                      .AllowAnyHeader()
                      .AllowCredentials());
             });
-
-            services.AddAutoMapper(typeof(Startup));
 
             services.ResolveDependencies();
         }
