@@ -6,6 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\imagens\1d1cf856-1236-4ee1-b27d-fc0bb70815b9_Hotel" />
+    <Content Remove="wwwroot\imagens\83caa677-0386-4462-a4ed-cde7c4f4f147_Hotel.jpeg" />
+    <Content Remove="wwwroot\imagens\84448e9a-bf24-41c9-b18e-d67b8134574f_Hotel" />
+    <Content Remove="wwwroot\imagens\933b5af5-bed7-476e-b594-61d6176486a0_Hotel" />
+    <Content Remove="wwwroot\imagens\97c8860e-a3d7-4106-b113-2e42b13729f3_Hotel.jpeg" />
+    <Content Remove="wwwroot\imagens\a83f9f1b-9496-4142-ad8e-6eb4e4b74a76_Hotel" />
+    <Content Remove="wwwroot\imagens\c04194fb-e77b-46fc-9d9c-7c3ae3526d60_Hotel" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
