@@ -79,7 +79,7 @@ namespace DevIO.Api.Controllers
             return CustomResponse(produtoViewModel);
         }
 
-        [RequestSizeLimit(40000000)]
+        [RequestSizeLimit(40000000)] //limita o tamanho da foto no upload
         [HttpPost("imagem")]
         public async Task<ActionResult> AdicionarImagem(IFormFile file)
         {
