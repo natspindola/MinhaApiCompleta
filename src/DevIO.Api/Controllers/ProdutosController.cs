@@ -67,18 +67,24 @@ namespace DevIO.Api.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var imagemPrefixo = Guid.NewGuid() + "_";
-            if (!UploadArquivos(produtoViewModel.ImagemUpload, imagemNome))
+            var imgPrefixo = Guid.NewGuid() + "_";
+            if (!await UploadArquivoAlternativo(produtoViewModel.ImagemUpload, imgPrefixo))
             {
-                return CustomResponse(produtoViewModel);
+                return CustomResponse(ModelState);
             }
 
-            produtoViewModel.Imagem = imagemNome;
+            produtoViewModel.Imagem = imgPrefixo + produtoViewModel.ImagemUpload.FileName;
             await _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel));
 
             return CustomResponse(produtoViewModel);
         }
 
+        [RequestSizeLimit(40000000)]
+        [HttpPost("imagem")]
+        public async Task<ActionResult> AdicionarImagem(IFormFile file)
+        {
+            return Ok(file);
+        }
 
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<ProdutoViewModel>> Excluir(Guid id)
@@ -117,9 +123,9 @@ namespace DevIO.Api.Controllers
 
         private async Task<bool> UploadArquivoAlternativo(IFormFile arquivo, string imgPrefixo)
         {
-            if (arquivo == null || arquivo.Length <= 0)
+            if (arquivo == null || arquivo.Length == 0)
             {
-                ModelState.AddModelError(key: string.Empty, errorMessage: "Forneça uma imagem para este produto!");
+                NotificarErro(mensagem: "Forneça uma imagem para este produto!");
                 return false;
             }
 
@@ -127,7 +133,7 @@ namespace DevIO.Api.Controllers
 
             if (System.IO.File.Exists(path))
             {
-                ModelState.AddModelError(key: string.Empty, errorMessage: "Já existe um arquivo com esse nome!");
+                NotificarErro(mensagem: "Já existe um arquivo com este nome!");
                 return false;
             }
 
