@@ -43,6 +43,7 @@ namespace DevIO.Api
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseMvcConfiguration();
         }
     }
