@@ -1,4 +1,5 @@
-﻿using DevIO.Data.Context;
+﻿using DevIO.Api.Data;
+using DevIO.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
