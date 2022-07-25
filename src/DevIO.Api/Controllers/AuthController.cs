@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DevIO.Api.Controllers
 {
-    [Route("api/conta")]
+    [Route("api")]
     public class AuthController : MainController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -20,6 +20,7 @@ namespace DevIO.Api.Controllers
             _userManager = userManager;
         }
 
+        [HttpPost("nova-conta")]
         public async Task<ActionResult> Registrar(RegisterUserViewModel registerUser)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
@@ -43,6 +44,27 @@ namespace DevIO.Api.Controllers
             }
 
             return CustomResponse(registerUser);
+        }
+
+        [HttpPost("entrar")]
+        public async Task<ActionResult> Login(LoginUserViewModel loginUser)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, isPersistent: false, lockoutOnFailure: true);
+
+            if (result.Succeeded)
+            {
+                return CustomResponse(loginUser);
+            }
+            if (result.IsLockedOut)
+            {
+                NotificarErro(mensagem: "Usuário temporariamente bloqueado por tentativas inválidas");
+                return CustomResponse(loginUser);
+            }
+
+            NotificarErro(mensagem: "Usuário ou senha incorretos");
+            return CustomResponse(loginUser);
         }
     }
 }
