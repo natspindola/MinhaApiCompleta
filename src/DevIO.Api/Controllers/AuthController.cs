@@ -46,7 +46,7 @@ namespace DevIO.Api.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return CustomResponse(GerarJwt());
+                return CustomResponse(await GerarJwt(user.Email));
             }
             foreach (var error in result.Errors)
             {
@@ -65,7 +65,7 @@ namespace DevIO.Api.Controllers
 
             if (result.Succeeded)
             {
-                return CustomResponse(GerarJwt());
+                return CustomResponse(await GerarJwt(loginUser.Email));
             }
             if (result.IsLockedOut)
             {
