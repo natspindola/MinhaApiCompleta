@@ -87,7 +87,7 @@ namespace DevIO.Api.Controllers
                 Expires = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), algorithm: SecurityAlgorithms.HmacSha256Signature)
             });
-
+            
             var encodedToken = tokenHandler.WriteToken(token);
             return encodedToken;
         }
