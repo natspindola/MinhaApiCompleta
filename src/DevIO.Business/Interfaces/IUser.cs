@@ -9,7 +9,7 @@ namespace DevIO.Business.Interfaces
         string Name { get; }
         Guid GetUserId();
         string GetUserEmail();
-        bool IsAuthentication();
+        bool IsAuthenticated();
         bool IsInRole(string role);
         IEnumerable<Claim> GetClaimsIdentity();
     }
