@@ -18,20 +18,27 @@ namespace DevIO.Api.Configuration
 
             services.AddCors(options =>
             {
-            options.AddPolicy(name: "Development",
-                configurePolicy: builder => builder.AllowAnyOrigin()
-                 .AllowAnyMethod()
-                 .AllowAnyHeader()
-                 .AllowCredentials());
+                options.AddPolicy(name: "Development",
+                    configurePolicy: builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
 
-            options.AddPolicy(name: "Production",
-                configurePolicy: builder =>
-                 builder
-                     .WithMethods("GET")
-                     .WithOrigins("http://desenvolvedor.io")
-                     .SetIsOriginAllowedToAllowWildcardSubdomains()
-                     .WithHeaders(HeaderNames.ContentType, "x-custom-header")
-                     .AllowAnyHeader());
+                options.AddDefaultPolicy(
+                    builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+
+                options.AddPolicy(name: "Production",
+                    configurePolicy: builder => builder
+                        .WithMethods("GET")
+                        .WithOrigins("http://desenvolvedor.io")
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        .WithHeaders(HeaderNames.ContentType, "x-custom-header")
+                        .AllowAnyHeader());
             });
 
             return services;
