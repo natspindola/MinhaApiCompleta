@@ -25,12 +25,12 @@ namespace DevIO.Api.Configuration
                         .AllowAnyHeader()
                         .AllowCredentials());
 
-                options.AddDefaultPolicy(
-                    builder => builder
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
+                //options.AddDefaultPolicy(
+                //    builder => builder
+                //        .AllowAnyOrigin()
+                //        .AllowAnyMethod()
+                //        .AllowAnyHeader()
+                //        .AllowCredentials());
 
                 options.AddPolicy(name: "Production",
                     configurePolicy: builder => builder
@@ -47,7 +47,6 @@ namespace DevIO.Api.Configuration
         public static IApplicationBuilder UseMvcConfiguration(this IApplicationBuilder app)
         {
             app.UseHttpsRedirection(); //redirecionamento automático para HTTPS
-            app.UseCors("Development");
             app.UseMvc();
 
             return app;
