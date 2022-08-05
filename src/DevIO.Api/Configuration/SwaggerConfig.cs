@@ -6,6 +6,19 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace DevIO.Api.Configuration
 {
+    public static class SwaggerConfig
+    {
+        public static IServiceCollection AddSwaggerConfig(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.OperationFilter<SwaggerDefaultValues>();
+            });
+
+            return services;
+        }
+    }
+
     public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
         readonly IApiVersionDescriptionProvider provider;
