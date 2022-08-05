@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DevIO.Api.Controllers;
 using DevIO.Api.ViewModels;
 using DevIO.Business.Interfaces;
 using DevIO.Business.Models;
@@ -11,17 +12,18 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DevIO.Api.Controllers
+namespace DevIO.Api.Versao1.Controllers
 {
     [Authorize]
-    [Route("api/produtos")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion/produtos")]
     public class ProdutosController : MainController
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly IProdutoService _produtoService;
         private readonly IMapper _mapper;
 
-        public ProdutosController(INotificador notificador, 
+        public ProdutosController(INotificador notificador,
                                   IProdutoRepository produtoRepository,
                                   IProdutoService produtoService,
                                   IMapper mapper,
@@ -55,7 +57,7 @@ namespace DevIO.Api.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var imagemNome = Guid.NewGuid() + "_" + produtoViewModel.Imagem;
-            if(!UploadArquivos(produtoViewModel.ImagemUpload, imagemNome))
+            if (!UploadArquivos(produtoViewModel.ImagemUpload, imagemNome))
             {
                 return CustomResponse(produtoViewModel);
             }
@@ -155,7 +157,7 @@ namespace DevIO.Api.Controllers
             }
 
             System.IO.File.WriteAllBytes(filePath, imageDataByteArray);
-            
+
             return true;
         }
 

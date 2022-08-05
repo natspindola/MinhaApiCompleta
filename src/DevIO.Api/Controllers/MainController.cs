@@ -23,7 +23,7 @@ namespace DevIO.Api.Controllers
             _notificador = notificador;
             AppUser = appUser;
 
-            if(AppUser.IsAuthenticated())
+            if (AppUser.IsAuthenticated())
             {
                 UsuarioId = appUser.GetUserId();
                 UsuarioAutenticado = true;

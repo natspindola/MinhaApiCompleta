@@ -1,4 +1,5 @@
-﻿using DevIO.Api.Extensions;
+﻿using DevIO.Api.Controllers;
+using DevIO.Api.Extensions;
 using DevIO.Api.ViewModels;
 using DevIO.Business.Interfaces;
 using Microsoft.AspNetCore.Cors;
@@ -13,9 +14,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevIO.Api.Controllers
+namespace DevIO.Api.Versao1.Controllers
 {
-    [Route("api")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion")]
     [DisableCors]
     public class AuthController : MainController
     {
@@ -110,7 +112,7 @@ namespace DevIO.Api.Controllers
                 Expires = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), algorithm: SecurityAlgorithms.HmacSha256Signature)
             });
-            
+
             var encodedToken = tokenHandler.WriteToken(token);
 
             var response = new LoginResponseViewModel

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DevIO.Api.Controllers;
 using DevIO.Api.Extensions;
 using DevIO.Api.ViewModels;
 using DevIO.Business.Interfaces;
@@ -10,7 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DevIO.Api.Controllers
+namespace DevIO.Api.Versao1.Controllers
 {
     [Authorize]
     [ApiVersion("1.0")]
@@ -54,7 +55,7 @@ namespace DevIO.Api.Controllers
             return fornecedor;
         }
 
-        [ClaimsAuthorize("Fornecedor","Adicionar")]
+        [ClaimsAuthorize("Fornecedor", "Adicionar")]
         [HttpPost]
         public async Task<ActionResult<FornecedorViewModel>> Adicionar(FornecedorViewModel fornecedorViewModel)
         {
@@ -87,7 +88,7 @@ namespace DevIO.Api.Controllers
         public async Task<ActionResult<FornecedorViewModel>> Excluir(Guid id)
         {
             var fornecedorViewModel = await ObterFornecedorEndereco(id);
-             
+
             if (fornecedorViewModel == null) return NotFound();
 
             await _fornecedorService.Remover(id);
