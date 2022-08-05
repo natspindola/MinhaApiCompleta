@@ -14,10 +14,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevIO.Api.Versao1.Controllers
+namespace DevIO.Api.V1.Controllers
 {
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion")]
+    [Route("api/v{version:apiVersion}")]
     [DisableCors]
     public class AuthController : MainController
     {

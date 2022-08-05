@@ -2,9 +2,9 @@
 using DevIO.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DevIO.Api.Versao2.Controllers
+namespace DevIO.Api.V1.Controllers
 {
-    [ApiVersion("2.0")]
+    [ApiVersion("1.0", Deprecated = true)]
     [Route("api/v{version:apiVersion}/teste")]
     public class TesteController : MainController
     {
@@ -16,7 +16,7 @@ namespace DevIO.Api.Versao2.Controllers
         [HttpGet]
         public string Valor()
         {
-            return "Sou a V2";
+            return "Sou a V1";
         }
     }
 }

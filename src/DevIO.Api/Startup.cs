@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace DevIO.Api
 {
@@ -31,6 +32,11 @@ namespace DevIO.Api
 
             services.WebApiConfig();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc(name: "v1", new Info { Title = "My API", Version = "v1" });
+            });
+
             services.ResolveDependencies();
 
         }
@@ -50,6 +56,12 @@ namespace DevIO.Api
 
             app.UseAuthentication();
             app.UseMvcConfiguration();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "My API V1");
+            });
         }
     }
 }
